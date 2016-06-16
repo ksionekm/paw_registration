@@ -281,34 +281,113 @@
                             <h1>Dane, które wprowadziłeś:</h1>
                             <br/>
                             <p:panelGrid columns="6">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Dane osobowe" />
+                                </f:facet>
+
                                 <p:outputLabel value="Imię:" />
                                 <p:outputLabel value="#{pawSignupBean.userPersonal.firstName}" />
-
                                 <p:outputLabel value="Nazwisko:" />
                                 <p:outputLabel value="#{pawSignupBean.userPersonal.lastName}" />
-
                                 <p:outputLabel value="Numer PESEL:" />
                                 <p:outputLabel value="#{pawSignupBean.userPersonal.pesel}" />
-
                                 <p:outputLabel value="Imię matki:" />
                                 <p:outputLabel value="#{pawSignupBean.userPersonal.motherName}" />
-
                                 <p:outputLabel value="Imię ojca:" />
                                 <p:outputLabel value="#{pawSignupBean.userPersonal.fatherName}" />
-
                                 <p:outputLabel value="Nazwisko rodowe matki:" />
                                 <p:outputLabel value="#{pawSignupBean.userPersonal.motherLastName}" />
-
                                 <p:outputLabel value="Data urodzenia:" />
                                 <p:outputLabel value="#{pawSignupBean.userPersonal.birthDate}">
                                     <f:convertDateTime type="both" pattern="YYYY-MM-dd"/>
                                 </p:outputLabel>
-
                                 <p:outputLabel value="Miejsce urodzenia:" />
                                 <p:outputLabel value="#{pawSignupBean.userPersonal.birthPlace}" />
-
                                 <p:outputLabel value="Obywatelstwo:" />
                                 <p:outputLabel value="#{pawSignupBean.userPersonal.citizenship}" />
+                            </p:panelGrid>
+
+                            <p:panelGrid columns="4">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Dane kontaktowe" />
+                                </f:facet>
+                                <p:outputLabel value="Email:" />
+                                <p:outputLabel value="#{pawSignupBean.userContact.email}" />
+
+                                <p:outputLabel value="Telefon:" />
+                                <p:outputLabel value="#{pawSignupBean.userContact.phone}" />
+                            </p:panelGrid>
+
+                            <p:panelGrid columns="6">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Adres zamieszkania" />
+                                </f:facet>
+                                <p:outputLabel value="Ulica:" />
+                                <p:outputLabel value="#{pawSignupBean.address.street}" />
+                                <p:outputLabel value="Nr domu:" />
+                                <p:outputLabel value="#{pawSignupBean.address.homeNumber}" />
+                                <p:outputLabel value="Nr mieszkania:" />
+                                <p:outputLabel value="#{pawSignupBean.address.flatNumber}" />
+
+                                <p:outputLabel value="Miasto:" />
+                                <p:outputLabel value="#{pawSignupBean.address.city}" />
+                                <p:outputLabel value="Kod pocztowy:" />
+                                <p:outputLabel value="#{pawSignupBean.address.postalCode}" />
+                                <p:outputLabel value="Województwo:" />
+                                <p:outputLabel value="#{pawSignupBean.address.state}" />
+                            </p:panelGrid>
+
+                            <p:panelGrid columns="6">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Adres korespondencyjny" />
+                                </f:facet>
+                                <p:outputLabel value="Ulica:" />
+                                <p:outputLabel value="#{pawSignupBean.shAddress.street}" />
+                                <p:outputLabel value="Nr domu:" />
+                                <p:outputLabel value="#{pawSignupBean.shAddress.homeNumber}" />
+                                <p:outputLabel value="Nr mieszkania:" />
+                                <p:outputLabel value="#{pawSignupBean.shAddress.flatNumber}" />
+
+                                <p:outputLabel value="Miasto:" />
+                                <p:outputLabel value="#{pawSignupBean.shAddress.city}" />
+                                <p:outputLabel value="Kod pocztowy:" />
+                                <p:outputLabel value="#{pawSignupBean.shAddress.postalCode}" />
+                                <p:outputLabel value="Województwo:" />
+                                <p:outputLabel value="#{pawSignupBean.shAddress.state}" />
+                            </p:panelGrid>
+
+                            <p:panelGrid columns="4">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Edukacja i doświadczenie" />
+                                </f:facet>
+
+                                <p:outputLabel value="Wykształcenie:" />
+                                <p:outputLabel value="#{pawSignupBean.userEducation.education}" />
+                                <p:outputLabel value="Wykształcenie dodatkowe:" />
+                                <p:outputLabel value="#{pawSignupBean.userEducation.additionalEd}" />
+                                <p:outputLabel value="Doświadczenie zawodowe:" />
+                                <p:outputLabel value="#{pawSignupBean.userEducation.jobs}" />
+                                <p:outputLabel value="Dodatkowe umiejętności:" />
+                                <p:outputLabel value="#{pawSignupBean.userEducation.additionalSkills}" />
+                            </p:panelGrid>
+
+                            <p:panelGrid columns="6">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Powszechny obowiązek obrony:"/>
+                                </f:facet>
+
+                                <p:outputLabel value="Stosunek do służby wojskowej:" />
+                                <p:outputLabel value="#{pawSignupBean.militaryData.militaryRatio}" />
+                                <p:outputLabel value="Stopień wojskowy:" />
+                                <p:outputLabel value="#{pawSignupBean.militaryData.militaryRank}" />
+                                <p:outputLabel value="Numer specjalności wojskowej:" />
+                                <p:outputLabel value="#{pawSignupBean.militaryData.specializationNumber}" />
+                                <p:outputLabel value="Przynależność ewidencyjna do WKU:" />
+                                <p:outputLabel value="#{pawSignupBean.militaryData.wkuNumber}" />
+                                <p:outputLabel value="Numer książeczki wojskowej:" />
+                                <p:outputLabel value="#{pawSignupBean.militaryData.militaryCardNumber}" />
+                                <p:outputLabel value="Przydział mobilizacyjny do sił zbrojnych RP:" />
+                                <p:outputLabel value="#{pawSignupBean.militaryData.allocation}" />
                             </p:panelGrid>
                             <p:commandButton value="Zarejestruj"  action="#{pawSignupBean.signup}" update="growl" process="@this"/>
                         </p:panel>

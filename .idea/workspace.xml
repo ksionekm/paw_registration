@@ -92,8 +92,8 @@
       <file leaf-file-name="signup.xhtml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/paw-registration-web/src/main/webapp/signup.xhtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.338558">
-              <caret line="303" column="86" selection-start-line="303" selection-start-column="86" selection-end-line="303" selection-end-column="86" />
+            <state vertical-scroll-proportion="0.4984326">
+              <caret line="389" column="98" selection-start-line="389" selection-start-column="98" selection-end-line="389" selection-end-column="98" />
               <folding />
             </state>
           </provider>
@@ -808,12 +808,12 @@
       <updated>1465847261497</updated>
       <workItem from="1465847262971" duration="3080000" />
       <workItem from="1466008956356" duration="9023000" />
-      <workItem from="1466097295152" duration="2728000" />
+      <workItem from="1466097295152" duration="5008000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14831000" />
+    <option name="totallyTimeSpent" value="17111000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -861,6 +861,11 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1151,8 +1156,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/paw-registration-web/src/main/webapp/signup.xhtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.338558">
-          <caret line="303" column="86" selection-start-line="303" selection-start-column="86" selection-end-line="303" selection-end-column="86" />
+        <state vertical-scroll-proportion="0.4984326">
+          <caret line="389" column="98" selection-start-line="389" selection-start-column="98" selection-end-line="389" selection-end-column="98" />
           <folding />
         </state>
       </provider>
