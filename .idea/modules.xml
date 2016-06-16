@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/paw-registration.iml" filepath="$PROJECT_DIR$/paw-registration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/paw-registration-ear/paw-registration-ear.iml" filepath="$PROJECT_DIR$/paw-registration-ear/paw-registration-ear.iml" />
+      <module fileurl="file://$PROJECT_DIR$/paw-registration-ejb/paw-registration-ejb.iml" filepath="$PROJECT_DIR$/paw-registration-ejb/paw-registration-ejb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/paw-registration-web/paw-registration-web.iml" filepath="$PROJECT_DIR$/paw-registration-web/paw-registration-web.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="ear" name="paw-registration-ear:ear">
+    <output-path>$PROJECT_DIR$/paw-registration-ear/target</output-path>
+    <root id="archive" name="paw-registration.ear">
+      <element id="artifact" artifact-name="paw-registration-ear:ear exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head><title>PAW rejestracja</title>
+</h:head>
+<h:body>
+    <div align="center">
+        <h1>PAW rejestracja</h1>
+
+            <h:form>
+                <p:growl id="growl" sticky="true" showDetail="true" />
+                <p:wizard flowListener="#{pawSignupBean.onFlowProcess}">
+                    <p:tab id="personal" title="Dane osobowe:">
+                        <p:panel header="Dane osobowe:">
+                            <p:messages id="msgs" />
+                            <p:panelGrid columns="6">
+                                <p:outputLabel for="firstName" value="Imię:" />
+                                <p:inputText required="true"
+                                             requiredMessage="Musisz podać imię"
+                                             validatorMessage="Imię musi mieć od 3 do 20 znaków i składać się z liter"
+                                             value="#{pawSignupBean.userPersonal.firstName}"
+                                             id="firstName">
+                                    <f:validateLength minimum="3" maximum="20" />
+                                    <f:validateRegex pattern="^[A-Z\\Ż]{1}[a-z\\ż\\ą\\ę\\ś\\ć\\ż\\ź\\ń]{2,19}$" />
+                                </p:inputText>
+
+                                <p:outputLabel for="lastName" value="Nazwisko:" />
+                                <p:inputText required="true"
+                                             requiredMessage="Musisz podać nazwisko"
+                                             value="#{pawSignupBean.userPersonal.lastName}"
+                                             id="lastName">
+                                </p:inputText>
+
+                                <p:outputLabel for="pesel" value="Numer Pesel:" />
+                                <p:inputText id="pesel"
+                                             required="true"
+                                             value="#{pawSignupBean.userPersonal.pesel}">
+                                    <f:validator validatorId="PeselValidator" />
+                                </p:inputText>
+
+                                <p:outputLabel for="motherName" value="Imię matki:" />
+                                <p:inputText required="true"
+                                             requiredMessage="Musisz podać imię matki"
+                                             value="#{pawSignupBean.userPersonal.motherName}"
+                                             id="motherName">
+                                </p:inputText>
+
+                                <p:outputLabel for="fatherName" value="Imię ojca:" />
+                                <p:inputText required="true"
+                                             requiredMessage="Musisz podać imię ojca"
+                                             value="#{pawSignupBean.userPersonal.fatherName}"
+                                             id="fatherName">
+                                </p:inputText>
+
+                                <p:outputLabel for="motherLastName" value="Nazwisko rodowe matki:" />
+                                <p:inputText required="true"
+                                             requiredMessage="Musisz podać nazwisko rodowe matki"
+                                             value="#{pawSignupBean.userPersonal.motherLastName}"
+                                             id="motherLastName">
+                                </p:inputText>
+
+                                <p:outputLabel for="birthDate" value="Data urodzenia:" />
+                                <p:inputText value="#{pawSignupBean.userPersonal.birthDate}"
+                                             size="20"
+                                             required="true"
+                                             requiredMessage="Musisz podać datę urodzenia"
+                                             converterMessage="Poprawny format daty to DD-MM-YYYY"
+                                             id="birthDate">
+                                    <f:convertDateTime pattern="d-M-yyyy" />
+                                </p:inputText>
+
+                                <p:outputLabel for="birthPlace" value="Miejsce urodzenia:" />
+                                <p:inputText required="true"
+                                             requiredMessage="Musisz podać miejsce urodzenia"
+                                             value="#{pawSignupBean.userPersonal.birthPlace}"
+                                             id="birthPlace">
+                                </p:inputText>
+
+                                <p:outputLabel for="citizenship" value="Obywatelstwo:" />
+                                <p:inputText required="true"
+                                             requiredMessage="Musisz podać obywatelstwo"
+                                             value="#{pawSignupBean.userPersonal.citizenship}"
+                                             id="citizenship">
+                                </p:inputText>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:tab>
+
+                    <br />
+
+                    <p:tab id="contact" title="Dane kontaktowe:">
+                        <p:panel header="Dane kontaktowe:">
+                            <p:messages />
+                            <p:panelGrid columns="2">
+                                <p:outputLabel for="email" value="Email:" />
+                                <p:inputText required="true"
+                                             requiredMessage="Musisz podać email"
+                                             validatorMessage="Nieporawny format email"
+                                             value="#{pawSignupBean.userContact.email}"
+                                             id="email">
+                                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                                </p:inputText>
+
+                                <p:outputLabel for="phone" value="Numer telefonu:" />
+                                <p:inputText required="true"
+                                             requiredMessage="Musisz podać numer telefonu"
+                                             converterMessage="Proszę wprowadzić numer telefonu"
+                                             value="#{pawSignupBean.userContact.phone}"
+                                             id="phone">
+                                </p:inputText>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:tab>
+
+                    <br/>
+
+                    <p:tab id="adressTab" title="Adres">
+                        <p:panel header="Adres zamieszkania oraz korespondencyjny">
+                            <p:messages />
+                            <p:panelGrid id="address" columns="6">
+                                <p:outputLabel for="street" value="Ulica:" />
+                                <p:inputText required="true"
+                                             id="street"
+                                             value="#{pawSignupBean.address.street}">
+                                </p:inputText>
+
+                                <p:outputLabel for="homeNumber" value="Numer domu:" />
+                                <p:inputText required="true"
+                                             id="homeNumber"
+                                             value="#{pawSignupBean.address.homeNumber}">
+                                </p:inputText>
+
+                                <p:outputLabel for="flatNumber" value="Numer mieszkania:" />
+                                <p:inputText id="flatNumber"
+                                             value="#{pawSignupBean.address.flatNumber}">
+                                </p:inputText>
+
+                                <p:outputLabel for="city" value="Miejscowość:" />
+                                <p:inputText id="city"
+                                             value="#{pawSignupBean.address.city}"
+                                             required="true" >
+                                </p:inputText>
+
+                                <p:outputLabel for="postalCode" value="Kod pocztowy:" />
+                                <p:inputText id="postalCode"
+                                             value="#{pawSignupBean.address.postalCode}"
+                                             required="true" >
+                                </p:inputText>
+
+                                <p:outputLabel for="state" value="województwo" />
+                                <p:inputText id="state"
+                                             value="#{pawSignupBean.address.state}"
+                                             required="true" >
+                                </p:inputText>
+                            </p:panelGrid>
+
+                            <br/>
+
+                            <p:panelGrid id="shippingAddress" columns="6" >
+                                <f:facet name="header" >
+                                    <p:outputLabel value="Adres korespondencyjny:   " />
+                                    <p:selectBooleanCheckbox value="#{pawSignupBean.checkBoxValue}">
+                                        <p:ajax listener="#{pawSignupBean.copyAddress}" update="shippingAddress" process="@this address" />
+                                    </p:selectBooleanCheckbox>
+                                    <h:outputText value="(taki sam jak adres zamieszkania)" />
+                                </f:facet>
+
+                                <p:outputLabel for="shStreet" value="Ulica:" />
+                                <p:inputText id="shStreet"
+                                             value="#{pawSignupBean.shAddress.street}" >
+                                </p:inputText>
+
+
+                                <p:outputLabel for="shHomeNumber" value="Numer domu:" />
+                                <p:inputText value="#{pawSignupBean.shAddress.homeNumber}"
+                                             id="shHomeNumber">
+                                </p:inputText>
+
+                                <p:outputLabel for="shFlatNumber" value="Numer mieszkania:" />
+                                <p:inputText id="shFlatNumber"
+                                             value="#{pawSignupBean.shAddress.flatNumber}">
+                                </p:inputText>
+
+                                <p:outputLabel for="shCity" value="Miejscowość:" />
+                                <p:inputText id="shCity"
+                                             value="#{pawSignupBean.shAddress.city}" >
+                                </p:inputText>
+
+                                <p:outputLabel for="shPostalCode" value="Kod pocztowy:" />
+                                <p:inputText id="shPostalCode"
+                                             value="#{pawSignupBean.shAddress.postalCode}" >
+                                </p:inputText>
+
+                                <p:outputLabel for="shState" value="Województwo:" />
+                                <p:inputText id="shState"
+                                             value="#{pawSignupBean.shAddress.state}" >
+                                </p:inputText>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:tab>
+
+                    <br/>
+
+                    <p:tab id="eduTab" title="Edukacja i doświadczenie" >
+                        <p:panel header="Edukacja i doświadczenie">
+                            <p:messages />
+                            <p:panelGrid columns="4">
+                                <p:outputLabel for="education" value="Edukacja:" />
+                                <p:inputTextarea rows="4" cols="30"
+                                                 value="#{pawSignupBean.userEducation.education}"
+                                                 id="education">
+                                </p:inputTextarea>
+
+                                <p:outputLabel for="additionalEd" value="Wykształcenie uzupełniające:" />
+                                <p:inputTextarea rows="4" cols="30"
+                                                 value="#{pawSignupBean.userEducation.additionalEd}"
+                                                 id="additionalEd">
+                                </p:inputTextarea>
+
+                                <p:outputLabel for="jobs" value="Dotychczasowe zatrudnienie:" />
+                                <p:inputTextarea rows="4" cols="30"
+                                                 value="#{pawSignupBean.userEducation.jobs}"
+                                                 id="jobs">
+                                </p:inputTextarea>
+
+                                <p:outputLabel for="additionalSkills" value="Dodatkowe umiejętności:" />
+                                <p:inputTextarea rows="4" cols="30"
+                                                 value="#{pawSignupBean.userEducation.additionalSkills}"
+                                                 id="additionalSkills">
+                                </p:inputTextarea>
+
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:tab>
+
+                    <br/>
+
+                    <p:tab id="militaryTab" title="Wojsko">
+                        <p:panel header="Powszechny obowiązek obrony:">
+                            <p:messages />
+                            <p:panelGrid columns="6">
+                                <p:outputLabel for="militaryRatio" value="Stosunek do powszechnego obowiązku obrony:" />
+                                <p:inputText value="#{pawSignupBean.militaryData.militaryRatio}"
+                                             id="militaryRatio">
+                                </p:inputText>
+
+                                <p:outputLabel for="militaryRank" value="Stopień wojskowy:" />
+                                <p:inputText value="#{pawSignupBean.militaryData.militaryRank}"
+                                             id="militaryRank">
+                                </p:inputText>
+
+                                <p:outputLabel for="specializationNumber" value="Numer specjalności wojskowej:" />
+                                <p:inputText value="#{pawSignupBean.militaryData.specializationNumber}"
+                                             id="specializationNumber">
+                                </p:inputText>
+
+                                <p:outputLabel for="wkuNumber" value="Przynależność ewidencyjna do WKU:" />
+                                <p:inputText value="#{pawSignupBean.militaryData.wkuNumber}"
+                                             id="wkuNumber">
+                                </p:inputText>
+
+                                <p:outputLabel for="militaryCard" value="Numer książeczki wojskowej:" />
+                                <p:inputText value="#{pawSignupBean.militaryData.militaryCardNumber}"
+                                             id="militaryCard">
+                                </p:inputText>
+
+                                <p:outputLabel for="allocation" value="Przydział mobilizacyjny do sił zbrojnych RP:" />
+                                <p:inputText value="#{pawSignupBean.militaryData.allocation}"
+                                             id="allocation">
+                                </p:inputText>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab id="confirm" title="Potwierdzenie">
+                        <p:panel header="Potwierdzenie">
+                            <h1>Dane, które wprowadziłeś:</h1>
+                            <br/>
+                            <p:panelGrid columns="6">
+                                <p:outputLabel value="Imię:" />
+                                <p:outputLabel value="#{pawSignupBean.userPersonal.firstName}" />
+
+                                <p:outputLabel value="Nazwisko:" />
+                                <p:outputLabel value="#{pawSignupBean.userPersonal.lastName}" />
+
+                                <p:outputLabel value="Numer PESEL:" />
+                                <p:outputLabel value="#{pawSignupBean.userPersonal.pesel}" />
+
+                                <p:outputLabel value="Imię matki:" />
+                                <p:outputLabel value="#{pawSignupBean.userPersonal.motherName}" />
+
+                                <p:outputLabel value="Imię ojca:" />
+                                <p:outputLabel value="#{pawSignupBean.userPersonal.fatherName}" />
+
+                                <p:outputLabel value="Nazwisko rodowe matki:" />
+                                <p:outputLabel value="#{pawSignupBean.userPersonal.motherLastName}" />
+
+                                <p:outputLabel value="Data urodzenia:" />
+                                <p:outputLabel value="#{pawSignupBean.userPersonal.birthDate}">
+                                    <f:convertDateTime type="both" pattern="YYYY-MM-dd"/>
+                                </p:outputLabel>
+
+                                <p:outputLabel value="Miejsce urodzenia:" />
+                                <p:outputLabel value="#{pawSignupBean.userPersonal.birthPlace}" />
+
+                                <p:outputLabel value="Obywatelstwo:" />
+                                <p:outputLabel value="#{pawSignupBean.userPersonal.citizenship}" />
+                            </p:panelGrid>
+                            <p:commandButton value="Zarejestruj"  action="#{pawSignupBean.signup}" update="growl" process="@this"/>
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
+            </h:form>
+
+    </div>
+</h:body>
+</html>

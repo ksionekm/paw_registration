@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - paw_signup@localhost" uuid="8fda17d0-d5a3-4315-b815-55a31af7912d">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>paw_signup.*</schema-pattern>
+      <default-schemas>paw_signup.*</default-schemas>
+    </data-source>
+  </component>
+</project>
