@@ -1,4 +1,4 @@
-news-example
+PAW Registration
 =====================
 
 What is it?
