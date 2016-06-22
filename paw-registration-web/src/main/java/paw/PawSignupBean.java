@@ -205,6 +205,55 @@ public class PawSignupBean implements Serializable {
         return "signup-confirmation";
 	}
 
+	public String update() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		this.userEntity.setFirstName(userPersonal.getFirstName());
+		this.userEntity.setLastName(userPersonal.getLastName());
+		this.userEntity.setPesel(userPersonal.getPesel());
+		this.userEntity.setMotherName(userPersonal.getMotherName());
+		this.userEntity.setFatherName(userPersonal.getFatherName());
+		this.userEntity.setMotherLastName(userPersonal.getMotherLastName());
+		this.userEntity.setBirthDate(new java.sql.Date(userPersonal.getBirthDate().getTime()));
+		this.userEntity.setBirthPlace(userPersonal.getBirthPlace());
+		this.userEntity.setCitizenship(userPersonal.getCitizenship());
+
+		this.userEntity.setEmail(userContact.getEmail());
+		this.userEntity.setPhone(userContact.getPhone());
+
+		this.userEntity.setAddressStreet(address.getStreet());
+		this.userEntity.setAddressHomeNumber(address.getHomeNumber());
+		this.userEntity.setAddressFlatNumber(address.getFlatNumber());
+		this.userEntity.setAddressCity(address.getCity());
+		this.userEntity.setAddressPostalCode(address.getPostalCode());
+		this.userEntity.setAddressState(address.getState());
+
+		this.userEntity.setShippingAddressStreet(shAddress.getStreet());
+		this.userEntity.setShippingAddressHomeNumber(shAddress.getHomeNumber());
+		this.userEntity.setShippingAddressFlatNumber(shAddress.getFlatNumber());
+		this.userEntity.setShippingAddressCity(shAddress.getCity());
+		this.userEntity.setShippingAddressPostalCode(shAddress.getPostalCode());
+		this.userEntity.setShippingAddressState(shAddress.getState());
+
+		this.userEntity.setEducation(userEducation.getEducation());
+		this.userEntity.setAdditionalEducation(userEducation.getAdditionalEd());
+		this.userEntity.setJobs(userEducation.getJobs());
+		this.userEntity.setAdditionalSkills(userEducation.getAdditionalSkills());
+
+		this.userEntity.setMilitaryRatio(militaryData.getMilitaryRatio());
+		this.userEntity.setMilitaryRank(militaryData.getMilitaryRank());
+		this.userEntity.setSpecializationNumber(militaryData.getSpecializationNumber());
+		this.userEntity.setWkuNumber(militaryData.getWkuNumber());
+		this.userEntity.setMilitaryCard(militaryData.getMilitaryCardNumber());
+		this.userEntity.setAllocation(militaryData.getAllocation());
+		if (this.usersLookupService.merge(this.userEntity)) {
+			context.addMessage(null, new FacesMessage("Edycja danych użytkownika przebiegła poprawnie."));
+		}
+		else {
+			context.addMessage(null, new FacesMessage("Błąd podczas edycji."));
+		}
+		return null;
+	}
+
 	//Logger
 	@Override
 	public String toString() {

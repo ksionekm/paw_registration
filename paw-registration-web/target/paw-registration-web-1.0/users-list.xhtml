@@ -7,8 +7,8 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 <f:metadata>
-	<f:viewParam name="page" value="#{newsManager.page}"/>
-	<f:viewParam name="removeId" value="#{newsManager.removeId}"/>
+	<f:viewParam name="page" value="#{usersManager.page}"/>
+	<f:viewParam name="removeId" value="#{usersManager.removeId}"/>
 </f:metadata>
 
 
@@ -24,7 +24,7 @@
 
 			<div id="sf_admin_container">
 				<div id="sf_admin_content">
-					<h2>Lista wiadomości</h2>
+					<h2>Lista użytkowników</h2>
 
 	            	<h:form >
 						<div class="notice"><h:messages /></div>
@@ -32,56 +32,58 @@
 					 
 					<div class="sf_admin_list">
 							
-							<h:dataTable var="news" value="#{newsManager.newsList}" cellspacing="0" rowClasses="odd,even">
+							<h:dataTable var="user" value="#{usersManager.usersList}" cellspacing="0" rowClasses="odd,even">
 								<h:column>
 									<f:facet name="header">&nbsp;ID&nbsp;</f:facet>
-									&nbsp;#{news.id}
+									#{user.userId}
 								</h:column>
 								<h:column>
-									<f:facet name="header">Tytuł</f:facet>
-									#{news.titleAbbr}
+									<f:facet name="header">Imię</f:facet>
+									#{user.firstName}
 								</h:column>
 								<h:column>
-									<f:facet name="header">Treść</f:facet>
-									#{news.contentAbbr}
+									<f:facet name="header">Nazwisko</f:facet>
+									#{user.lastName}
 									<f:facet name="footer">
-										<h:outputText value="#{newsManager.tableListCaption}" id="caption1" />
+										<h:outputText value="#{usersManager.tableListCaption}" id="caption1" />
 										&nbsp;&nbsp;&nbsp;
-										<h:link outcome="news-list.xhtml?page=#{newsManager.firstPage}" value="">
+										<h:link outcome="users-list.xhtml?page=#{usersManager.firstPage}" value="">
 											<h:graphicImage library="img" name="first.png" />
 										</h:link>
 										&nbsp;
-										<h:link outcome="news-list.xhtml?page=#{newsManager.previousPage}" value="">
+										<h:link outcome="users-list.xhtml?page=#{usersManager.previousPage}" value="">
 											<h:graphicImage library="img" name="previous.png" />
 										</h:link>										
 										&nbsp;
-										<h:link outcome="news-list.xhtml?page=#{newsManager.nextPage}" value="">
+										<h:link outcome="users-list.xhtml?page=#{usersManager.nextPage}" value="">
 											<h:graphicImage library="img" name="next.png" />
 										</h:link>
 										&nbsp;
-										<h:link outcome="news-list.xhtml?page=#{newsManager.lastPage}" value="">
+										<h:link outcome="users-list.xhtml?page=#{usersManager.lastPage}" value="">
 											<h:graphicImage library="img" name="last.png" />
 										</h:link>
 										&nbsp;										
 									</f:facet>
-									
 								</h:column>
 								<h:column>
-									<f:facet name="header">Data dodanie</f:facet>
-									#{news.createdAtAbbr}
+									<f:facet name="header">Pesel</f:facet>
+									<h:outputText value="#{user.pesel}">
+										<f:convertNumber pattern="0"/>
+									</h:outputText>
+
 								</h:column>
 								<h:column>
-									<f:facet name="header">Data aktualizacji</f:facet>
-									#{news.updatedAtAbbr}
+									<f:facet name="header">Data urodzenia</f:facet>
+									#{user.birthDate}
 								</h:column>
 
 								<h:column>
 									<f:facet name="header">Akcja</f:facet>
-									<h:link outcome="edit.xhtml?id=#{news.id}" value="" title="Edytuj">										
+									<h:link outcome="edit.xhtml?id=#{user.userId}" value="" title="Edytuj">
 										<h:graphicImage library="img" name="edit.png" />
 									</h:link>
 									&nbsp;
-									<h:link outcome="news-list.xhtml?removeId=#{news.id}" value="" title="Usuń">										
+									<h:link outcome="users-list.xhtml?removeId=#{user.userId}" value="" title="Usuń">
 										<h:graphicImage library="img" name="delete.png" />
 									</h:link>
 								</h:column>

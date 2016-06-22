@@ -8,3 +8,4 @@ paw\UserEducation.class
 paw\UserPersonalInfo.class
 paw\UserContact.class
 paw\UserMilitaryData.class
+paw\UsersManager.class
