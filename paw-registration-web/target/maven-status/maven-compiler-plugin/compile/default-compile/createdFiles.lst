@@ -3,7 +3,6 @@ paw\UsersLookupService.class
 paw\UserAddress.class
 paw\PawSignupBean.class
 paw\PeselValidator.class
-paw\NavigationBean.class
 paw\UserEducation.class
 paw\UserPersonalInfo.class
 paw\UserContact.class

@@ -1,6 +1,7 @@
 package paw;
 
 import org.primefaces.event.FlowEvent;
+import org.primefaces.event.RowEditEvent;
 import paw.registration.jpa.UserEntity;
 
 import javax.faces.application.FacesMessage;
@@ -10,6 +11,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.logging.Logger;
+import com.lowagie.text.Document;
+import com.lowagie.text.PageSize;
 
 @ManagedBean(eager = true)
 @SessionScoped
@@ -17,6 +20,14 @@ public class PawSignupBean implements Serializable {
 
 	private static final long serialVersionUID = 5103450608081796600L;
 	private Logger logger = Logger.getLogger("PAW-signup");
+
+	private String login;
+	private String password;
+	private String rootLogin = "root";
+	private String rootPassword = "root";
+
+
+	private int id;
 
     protected UserEntity userEntity;
     private UserPersonalInfo userPersonal = new UserPersonalInfo();
@@ -36,7 +47,23 @@ public class PawSignupBean implements Serializable {
         userEntity = new UserEntity();
     }
 
-    public UserEntity getUserEntity() {
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public UserEntity getUserEntity() {
         return userEntity;
     }
 
@@ -152,6 +179,97 @@ public class PawSignupBean implements Serializable {
 		}
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+		if (id == 0) {
+			this.userEntity = null;
+			this.userPersonal.setFirstName("");
+			this.userPersonal.setLastName("");
+			this.userPersonal.setBirthDate(null);
+			this.userPersonal.setBirthPlace("");
+			this.userPersonal.setFatherName("");
+			this.userPersonal.setMotherName("");
+			this.userPersonal.setMotherLastName("");
+			this.userPersonal.setPesel(null);
+			this.userPersonal.setCitizenship("");
+
+			this.userContact.setEmail("");
+			this.userContact.setPhone(null);
+
+			this.address.setCity("");
+			this.address.setFlatNumber("");
+			this.address.setHomeNumber("");
+			this.address.setPostalCode("");
+			this.address.setState("");
+			this.address.setStreet("");
+
+			this.shAddress.setCity("");
+			this.shAddress.setFlatNumber("");
+			this.shAddress.setHomeNumber("");
+			this.shAddress.setPostalCode("");
+			this.shAddress.setState("");
+			this.shAddress.setStreet("");
+
+			this.userEducation.setAdditionalEd("");
+			this.userEducation.setAdditionalSkills("");
+			this.userEducation.setEducation("");
+			this.userEducation.setJobs("");
+
+			this.militaryData.setAllocation("");
+			this.militaryData.setMilitaryCardNumber("");
+			this.militaryData.setMilitaryRank("");
+			this.militaryData.setMilitaryRatio("");
+			this.militaryData.setSpecializationNumber("");
+			this.militaryData.setWkuNumber("");
+		}
+		if (this.usersLookupService != null && id != 0) {
+
+			this.userEntity = this.usersLookupService.getUsers(id);
+			this.userPersonal.setFirstName(this.userEntity.getFirstName());
+			this.userPersonal.setLastName(this.userEntity.getLastName());
+			this.userPersonal.setBirthDate(this.userEntity.getBirthDate());
+			this.userPersonal.setBirthPlace(this.userEntity.getBirthPlace());
+			this.userPersonal.setFatherName(this.userEntity.getFatherName());
+			this.userPersonal.setMotherName(this.userEntity.getMotherName());
+			this.userPersonal.setMotherLastName(this.userEntity.getMotherLastName());
+			this.userPersonal.setPesel((long)this.userEntity.getPesel());
+			this.userPersonal.setCitizenship(this.userEntity.getCitizenship());
+
+			this.userContact.setEmail(this.userEntity.getEmail());
+			this.userContact.setPhone(this.userEntity.getPhone());
+
+			this.address.setCity(this.userEntity.getAddressCity());
+			this.address.setFlatNumber(this.userEntity.getAddressFlatNumber());
+			this.address.setHomeNumber(this.userEntity.getAddressHomeNumber());
+			this.address.setPostalCode(this.userEntity.getAddressPostalCode());
+			this.address.setState(this.userEntity.getAddressState());
+			this.address.setStreet(this.userEntity.getAddressStreet());
+
+			this.shAddress.setCity(this.userEntity.getShippingAddressCity());
+			this.shAddress.setFlatNumber(this.userEntity.getShippingAddressFlatNumber());
+			this.shAddress.setHomeNumber(this.userEntity.getShippingAddressHomeNumber());
+			this.shAddress.setPostalCode(this.userEntity.getShippingAddressPostalCode());
+			this.shAddress.setState(this.userEntity.getShippingAddressState());
+			this.shAddress.setStreet(this.userEntity.getShippingAddressStreet());
+
+			this.userEducation.setAdditionalEd(this.userEntity.getAdditionalEducation());
+			this.userEducation.setAdditionalSkills(this.userEntity.getAdditionalSkills());
+			this.userEducation.setEducation(this.userEntity.getEducation());
+			this.userEducation.setJobs(this.userEntity.getJobs());
+
+			this.militaryData.setAllocation(this.userEntity.getAllocation());
+			this.militaryData.setMilitaryCardNumber(this.userEntity.getMilitaryCard());
+			this.militaryData.setMilitaryRank(this.userEntity.getMilitaryRank());
+			this.militaryData.setMilitaryRatio(this.userEntity.getMilitaryRatio());
+			this.militaryData.setSpecializationNumber(this.userEntity.getSpecializationNumber());
+			this.militaryData.setWkuNumber(this.userEntity.getWkuNumber());
+		}
+	}
+
 	public String signup() {
 		logger.info("signup invoked, bean fields: " + this);
         FacesContext context = FacesContext.getCurrentInstance();
@@ -252,6 +370,28 @@ public class PawSignupBean implements Serializable {
 			context.addMessage(null, new FacesMessage("Błąd podczas edycji."));
 		}
 		return null;
+	}
+
+	public void onRowEdit(RowEditEvent event) {
+		FacesMessage msg= new FacesMessage("Edycja zakończona", ((UserEntity) event.getObject()).getFirstName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+		this.update();
+	}
+
+	public void onRowEditCancel(RowEditEvent event) {
+		FacesMessage msg= new FacesMessage("Edycja anulowana", ((UserEntity) event.getObject()).getFirstName());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void preProcessPDF(Object document) {
+		Document pdf = (Document) document;
+		pdf.setPageSize(PageSize.A2.rotate());
+		pdf.open();
+	}
+
+	public String loginAction () {
+		if(rootLogin.equals(login) && rootPassword.equals(password)) return "users-list";
+		else return "home";
 	}
 
 	//Logger

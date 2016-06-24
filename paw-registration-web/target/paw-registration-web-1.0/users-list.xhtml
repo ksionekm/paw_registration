@@ -1,104 +1,285 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:f="http://java.sun.com/jsf/core">
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+
 
 <f:metadata>
 	<f:viewParam name="page" value="#{usersManager.page}"/>
 	<f:viewParam name="removeId" value="#{usersManager.removeId}"/>
 </f:metadata>
 
-
+<h:head><title>PAW rejestracja</title>
+</h:head>
 <h:body>
-	<ui:composition template="/WEB-INF/templates/template.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
-		<ui:define name="content">
-		
+			<h2>Lista użytkowników</h2>
 
-			<div id="sf_admin_container">
-				<div id="sf_admin_content">
-					<h2>Lista użytkowników</h2>
-
-	            	<h:form >
-						<div class="notice"><h:messages /></div>
-	            	</h:form>
+			<h:form >
+				<div class="notice"><h:messages /></div>
+			</h:form>
 					 
-					<div class="sf_admin_list">
-							
-							<h:dataTable var="user" value="#{usersManager.usersList}" cellspacing="0" rowClasses="odd,even">
-								<h:column>
-									<f:facet name="header">&nbsp;ID&nbsp;</f:facet>
-									#{user.userId}
-								</h:column>
-								<h:column>
-									<f:facet name="header">Imię</f:facet>
-									#{user.firstName}
-								</h:column>
-								<h:column>
-									<f:facet name="header">Nazwisko</f:facet>
-									#{user.lastName}
-									<f:facet name="footer">
-										<h:outputText value="#{usersManager.tableListCaption}" id="caption1" />
-										&nbsp;&nbsp;&nbsp;
-										<h:link outcome="users-list.xhtml?page=#{usersManager.firstPage}" value="">
-											<h:graphicImage library="img" name="first.png" />
-										</h:link>
-										&nbsp;
-										<h:link outcome="users-list.xhtml?page=#{usersManager.previousPage}" value="">
-											<h:graphicImage library="img" name="previous.png" />
-										</h:link>										
-										&nbsp;
-										<h:link outcome="users-list.xhtml?page=#{usersManager.nextPage}" value="">
-											<h:graphicImage library="img" name="next.png" />
-										</h:link>
-										&nbsp;
-										<h:link outcome="users-list.xhtml?page=#{usersManager.lastPage}" value="">
-											<h:graphicImage library="img" name="last.png" />
-										</h:link>
-										&nbsp;										
-									</f:facet>
-								</h:column>
-								<h:column>
-									<f:facet name="header">Pesel</f:facet>
-									<h:outputText value="#{user.pesel}">
-										<f:convertNumber pattern="0"/>
-									</h:outputText>
+			<h:form id="form">
 
-								</h:column>
-								<h:column>
-									<f:facet name="header">Data urodzenia</f:facet>
-									#{user.birthDate}
-								</h:column>
+				<p:dataTable id="users" var="user" value="#{usersManager.usersList}"
+							 rows="10"
+							 paginator="true"
+							 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							 rowsPerPageTemplate="5,10,15"
+                             tableStyle="width:auto">
+					<f:facet name="header">
+						Lista zarejestrowanych użytkowników
+						<p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+						<p:columnToggler datasource="users" trigger="toggler" />
+					</f:facet>
 
-								<h:column>
-									<f:facet name="header">Akcja</f:facet>
-									<h:link outcome="edit.xhtml?id=#{user.userId}" value="" title="Edytuj">
-										<h:graphicImage library="img" name="edit.png" />
-									</h:link>
-									&nbsp;
-									<h:link outcome="users-list.xhtml?removeId=#{user.userId}" value="" title="Usuń">
-										<h:graphicImage library="img" name="delete.png" />
-									</h:link>
-								</h:column>
-							</h:dataTable>
-													
-					</div>
-					
-					
-					
-				</div>
-			</div>
+					<p:column>
+						<f:facet name="header">Akcja</f:facet>
+						<h:link outcome="edit.xhtml?id=#{user.userId}" value="" title="Edytuj">
+							<h:graphicImage library="img" name="edit.png" />
+						</h:link>
+						&nbsp;
+						<h:link outcome="users-list.xhtml?removeId=#{user.userId}" value="" title="Usuń">
+							<h:graphicImage library="img" name="delete.png" />
+						</h:link>
+						<p:commandButton update=":form:userDetail" oncomplete="PF('userDialog').show()" icon="ui-icon-search" title="View">
+							<f:setPropertyActionListener value="#{user}" target="#{pawSignupBean.userEntity}" />
+						</p:commandButton>
+					</p:column>
+
+					<p:column headerText="Id" footerText="Id">
+						<h:outputText value="#{user.userId}"/>
+					</p:column>
+					<p:column headerText="Imię" footerText="Imię">
+						<h:outputText value="#{user.firstName}"/>
+					</p:column>
+					<p:column headerText="Nazwisko" footerText="Nazwisko">
+						<h:outputText value="#{user.lastName}"/>
+					</p:column>
+					<p:column headerText="Pesel" footerText="Pesel">
+						<h:outputText value="#{user.pesel}">
+							<f:convertNumber pattern="0"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Imię matki" footerText="Imię matki">
+						<h:outputText value="#{user.motherName}"/>
+					</p:column>
+					<p:column headerText="Imię ojca" footerText="Imię ojca">
+						<h:outputText value="#{user.fatherName}"/>
+					</p:column>
+					<p:column headerText="Nazwisko panieńskie matki" footerText="Nazwisko panieńskie matki">
+						<h:outputText value="#{user.motherLastName}"/>
+					</p:column>
+					<p:column headerText="Data urodzenia" footerText="Data urodzenia">
+						<h:outputText value="#{user.birthDate}"/>
+					</p:column>
+					<p:column headerText="Miejsce urodzenia" footerText="Miejsce urodzenia">
+						<h:outputText value="#{user.birthPlace}"/>
+					</p:column>
+					<p:column headerText="Obywatelstwo" footerText="Obywatelstwo">
+						<h:outputText value="#{user.citizenship}"/>
+					</p:column>
+
+					<p:column headerText="Adres email" footerText="Adres email">
+						<h:outputText value="#{user.email}"/>
+					</p:column>
+					<p:column headerText="Nr telefonu" footerText="Nr telefonu">
+						<h:outputText value="#{user.phone}"/>
+					</p:column>
+
+					<p:column headerText="Ulica (zamieszkania)" footerText="Ulica (zamieszkania)">
+						<h:outputText value="#{user.addressStreet}"/>
+					</p:column>
+					<p:column headerText="Nr domu (zamieszkania)" footerText="Nr domu (zamieszkania)">
+						<h:outputText value="#{user.addressHomeNumber}"/>
+					</p:column>
+					<p:column headerText="Nr mieszkania (zamieszkania)" footerText="Nr mieszkania (zamieszkania)">
+						<h:outputText value="#{user.addressFlatNumber}"/>
+					</p:column>
+					<p:column headerText="Miasto (zamieszkania)" footerText="Miasto (zamieszkania)">
+						<h:outputText value="#{user.addressCity}"/>
+					</p:column>
+					<p:column headerText="Kod pocztowy (zamieszkania)" footerText="Kod pocztowy (zamieszkania)">
+						<h:outputText value="#{user.addressPostalCode}"/>
+					</p:column>
+					<p:column headerText="Województwo (zamieszkania)" footerText="Województwo (zamieszkania)">
+						<h:outputText value="#{user.addressState}"/>
+					</p:column>
+
+					<p:column headerText="Ulica (korespondencyjny)" footerText="Ulica (korespondencyjny)">
+						<h:outputText value="#{user.shippingAddressStreet}"/>
+					</p:column>
+					<p:column headerText="Nr domu (korespondencyjny)" footerText="Nr domu (korespondencyjny)">
+						<h:outputText value="#{user.shippingAddressHomeNumber}"/>
+					</p:column>
+					<p:column headerText="Nr mieszkania (korespondencyjny)" footerText="Nr mieszkania (korespondencyjny)">
+						<h:outputText value="#{user.shippingAddressFlatNumber}"/>
+					</p:column>
+					<p:column headerText="Miasto (korespondencyjny)" footerText="Miasto (korespondencyjny)">
+						<h:outputText value="#{user.shippingAddressCity}"/>
+					</p:column>
+					<p:column headerText="Kod pocztowy (korespondencyjny)" footerText="Kod pocztowy (korespondencyjny)">
+						<h:outputText value="#{user.shippingAddressPostalCode}"/>
+					</p:column>
+					<p:column headerText="Województwo (korespondencyjny)" footerText="Województwo (korespondencyjny)">
+						<h:outputText value="#{user.shippingAddressState}"/>
+					</p:column>
+
+					<p:column headerText="Wykształcenie" footerText="Wykształcenie">
+						<h:outputText value="#{user.education}"/>
+					</p:column>
+					<p:column headerText="Wykształcenie dodatkowe" footerText="Wykształcenie dodatkowe">
+						<h:outputText value="#{user.additionalEducation}"/>
+					</p:column>
+					<p:column headerText="Doświadczenie zawodowe" footerText="Doświadczenie zawodowe">
+						<h:outputText value="#{user.jobs}"/>
+					</p:column>
+					<p:column headerText="Dodatkowe umiejętności" footerText="Dodatkowe umiejętności">
+						<h:outputText value="#{user.additionalSkills}"/>
+					</p:column>
+
+					<p:column headerText="Stosunek do służby wojskowej" footerText="Stosunek do służby wojskowej">
+						<h:outputText value="#{user.militaryRatio}"/>
+					</p:column>
+					<p:column headerText="Stopień wojskowy" footerText="Stopień wojskowy">
+						<h:outputText value="#{user.militaryRank}"/>
+					</p:column>
+					<p:column headerText="Numer specjalności wojskowej" footerText="Numer specjalności wojskowej">
+						<h:outputText value="#{user.specializationNumber}"/>
+					</p:column>
+					<p:column headerText="Przynależność ewidencyjna do WKU" footerText="Przynależność ewidencyjna do WKU">
+						<h:outputText value="#{user.wkuNumber}"/>
+					</p:column>
+					<p:column headerText="Numer książeczki wojskowej" footerText="Numer książeczki wojskowej">
+						<h:outputText value="#{user.militaryCard}"/>
+					</p:column>
+					<p:column headerText="Przydział mobilizacyjny do sił zbrojnych RP" footerText="Przydział mobilizacyjny do sił zbrojnych RP">
+						<h:outputText value="#{user.allocation}"/>
+					</p:column>
+
+				</p:dataTable>
+
+				<h:commandLink value="Eksport do PDF">
+					<p:dataExporter type="pdf" target="users" fileName="users" pageOnly="true" preProcessor="#{pawSignupBean.preProcessPDF}"/>
+				</h:commandLink>
+
+				<p:dialog header="User Info" widgetVar="userDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true" fitViewport="true">
+
+					<p:outputPanel id="userDetail" style="text-align:center;">
+						<p:panelGrid  columns="2" rendered="#{not empty pawSignupBean.userEntity}" columnClasses="label,value">
+							<f:facet name="header">
+								<h:outputText value="Użytkownik" />
+							</f:facet>
+
+							<h:outputText value="Id:" />
+							<h:outputText value="#{pawSignupBean.userEntity.userId}" />
+
+							<h:outputText value="Imię:" />
+							<h:outputText value="#{pawSignupBean.userEntity.firstName}" />
+
+							<h:outputText value="Nazwisko:" />
+							<h:outputText value="#{pawSignupBean.userEntity.lastName}" />
+
+							<h:outputText value="Pesel:" />
+							<h:outputText value="#{pawSignupBean.userEntity.pesel}" />
+
+							<h:outputText value="Imie matki:" />
+							<h:outputText value="#{pawSignupBean.userEntity.motherName}" />
+
+							<h:outputText value="Imię ojca:" />
+							<h:outputText value="#{pawSignupBean.userEntity.fatherName}" />
+
+							<h:outputText value="Nazwisko panieńskie matki:" />
+							<h:outputText value="#{pawSignupBean.userEntity.motherLastName}"/>
+
+							<h:outputText value="Data urodzenia:" />
+							<h:outputText value="#{pawSignupBean.userEntity.birthDate}"/>
+
+							<h:outputText value="Miejsce urodzenia:" />
+							<h:outputText value="#{pawSignupBean.userEntity.birthPlace}"/>
+
+							<h:outputText value="Obywatelstwo:" />
+							<h:outputText value="#{pawSignupBean.userEntity.citizenship}"/>
+
+							<h:outputText value="Adres email:" />
+							<h:outputText value="#{pawSignupBean.userEntity.email}"/>
+
+							<h:outputText value="Nr telefonu:" />
+							<h:outputText value="#{pawSignupBean.userEntity.phone}"/>
+
+							<h:outputText value="Ulica (zamieszkania):" />
+							<h:outputText value="#{pawSignupBean.userEntity.addressStreet}"/>
+
+							<h:outputText value="Nr domu (zamieszkania):" />
+							<h:outputText value="#{pawSignupBean.userEntity.addressHomeNumber}"/>
+
+							<h:outputText value="Nr mieszkania (zamieszkania):" />
+							<h:outputText value="#{pawSignupBean.userEntity.addressFlatNumber}"/>
+
+							<h:outputText value="Miasto (zamieszkania):" />
+							<h:outputText value="#{pawSignupBean.userEntity.addressCity}"/>
+
+							<h:outputText value="Kod pocztowy (zamieszkania):" />
+							<h:outputText value="#{pawSignupBean.userEntity.addressPostalCode}"/>
+
+							<h:outputText value="Województwo (zamieszkania):" />
+							<h:outputText value="#{pawSignupBean.userEntity.addressState}"/>
+
+							<h:outputText value="Ulica (korespondencyjny):" />
+							<h:outputText value="#{pawSignupBean.userEntity.shippingAddressStreet}"/>
+
+							<h:outputText value="Nr domu (korespondencyjny):" />
+							<h:outputText value="#{pawSignupBean.userEntity.shippingAddressHomeNumber}"/>
+
+							<h:outputText value="Nr mieszkania (korespondencyjny):" />
+							<h:outputText value="#{pawSignupBean.userEntity.shippingAddressFlatNumber}"/>
+
+							<h:outputText value="Miasto (korespondencyjny):" />
+							<h:outputText value="#{pawSignupBean.userEntity.shippingAddressCity}"/>
+
+							<h:outputText value="Kod pocztowy (korespondencyjny):" />
+							<h:outputText value="#{pawSignupBean.userEntity.shippingAddressPostalCode}"/>
+
+							<h:outputText value="Województwo (korespondencyjny):" />
+							<h:outputText value="#{pawSignupBean.userEntity.shippingAddressState}"/>
+
+							<h:outputText value="Wykształcenie:" />
+							<h:outputText value="#{pawSignupBean.userEntity.education}"/>
+
+							<h:outputText value="Wykształcenie dodatkowe:" />
+							<h:outputText value="#{pawSignupBean.userEntity.additionalEducation}"/>
+
+							<h:outputText value="Doświadczenie zawodowe:" />
+							<h:outputText value="#{pawSignupBean.userEntity.jobs}"/>
+
+							<h:outputText value="Dodatkowe umiejętności:" />
+							<h:outputText value="#{pawSignupBean.userEntity.additionalSkills}"/>
+
+							<h:outputText value="Stosunek do służby wojskowej:" />
+							<h:outputText value="#{pawSignupBean.userEntity.militaryRatio}"/>
+
+							<h:outputText value="Stopień wojskowy:" />
+							<h:outputText value="#{pawSignupBean.userEntity.militaryRank}"/>
+
+							<h:outputText value="Numer specjalności wojskowej:" />
+							<h:outputText value="#{pawSignupBean.userEntity.specializationNumber}"/>
+
+							<h:outputText value="Przynależność ewidencyjna do WKU:" />
+							<h:outputText value="#{pawSignupBean.userEntity.wkuNumber}"/>
+
+							<h:outputText value="Numer książeczki wojskowej:" />
+							<h:outputText value="#{pawSignupBean.userEntity.militaryCard}"/>
+
+							<h:outputText value="Przydział mobilizacyjny do sił zbrojnych RP:" />
+							<h:outputText value="#{pawSignupBean.userEntity.allocation}"/>
 
 
-		</ui:define>
+						</p:panelGrid>
+					</p:outputPanel>
 
-	</ui:composition>
+				</p:dialog>
+			</h:form>
 </h:body>
 </html>
